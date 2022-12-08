@@ -10,9 +10,11 @@ const app = express()
 
 app.use(cors())
 app.use(express.json())
+
+
 app.use('/openai',router)
 
 
-app.listen(3000,()=>{
+app.listen(3001,()=>{
     console.log("server started")
 })

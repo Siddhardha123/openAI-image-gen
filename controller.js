@@ -1,19 +1,23 @@
 import {Configuration,OpenAIApi} from 'openai'
+import dotenv from 'dotenv'
+dotenv.config()
 const config = new Configuration({
-    apiKey : process.env.API,
+    apiKey : process.env.API_KEY,
 });
-
 
 const openai = new OpenAIApi(config);
 const generateImage = async (req,res) =>{
+     const {prompt , size, count}= req.body;
+     const imageSize = size === 'small' ? 
+     '256x256' : size === 'medium' ? '512x512': '1024x1024'
        try {
           const resp = await openai.createImage({
-            prompt : 'polar bear on ice skates',
-            n:1,
-            size : '512x512'
+            prompt : prompt,
+            n: count,
+            size : imageSize,
           })
 
-          const imageUrl = resp.data.data[0].url;
+          const imageUrl = resp.data.data;
           res.status(200).json({
             success : true,
             data : imageUrl
