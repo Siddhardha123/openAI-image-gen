@@ -1,23 +1,35 @@
+import {Configuration,OpenAIApi} from 'openai'
+
+
 import React from 'react'
 import axios from 'axios'
 import { Input,Container,Button,Select,Spinner } from '@chakra-ui/react'
 import { useState} from 'react'
+
 const Form = () => {
+   const config = new Configuration({
+      apiKey : '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',
+  });
+  const openai = new OpenAIApi(config);
+ 
   
    const [prompt,setPrompt] = useState('')
    const [count,setCount] = useState()
    const [size,setSize] = useState('')
    const [loading,setLoading] = useState(false)
    const [postdata,setPostdata] = useState()
-   const handleSubmit = (e)=>{
+   const handleSubmit = async(e)=>{
         e.preventDefault()
         setLoading(true) 
-        axios.post('http://localhost:3001/openai/generateimage',{prompt,size,count}).then((res) => {
-         setPostdata(res.data)
-         // console.log(res.data)
-         setLoading(false)
-      })
-     .catch(error => console.log(error)) 
+        const imageSize = size === 'small' ? 
+        '256x256' : size === 'medium' ? '512x512': '1024x1024'
+   const resp = await openai.createImage({
+      prompt : prompt,
+      n: count,
+      size : imageSize,
+    })
+    setPostdata(resp.data)
+    setLoading(false)
    }
    if(postdata){
       console.log(postdata)
