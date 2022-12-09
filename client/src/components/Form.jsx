@@ -8,7 +8,7 @@ import { useState} from 'react'
 const Form = () => {
    //  console.log(env.API_KEY)
    const config = new Configuration({
-      apiKey : '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',
+      apiKey : env.API_KEY,
   });
   const openai = new OpenAIApi(config);
  
