@@ -1,14 +1,14 @@
 import {Configuration,OpenAIApi} from 'openai'
 
-
+import env from "react-dotenv";
 import React from 'react'
-import axios from 'axios'
 import { Input,Container,Button,Select,Spinner } from '@chakra-ui/react'
 import { useState} from 'react'
 
 const Form = () => {
+   //  console.log(env.API_KEY)
    const config = new Configuration({
-      apiKey : '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',
+      apiKey : env.API_KEY,
   });
   const openai = new OpenAIApi(config);
  
@@ -68,7 +68,6 @@ const Form = () => {
                </div>
             )) : <Spinner />}
          </div>
-        
       </div>
       
 
